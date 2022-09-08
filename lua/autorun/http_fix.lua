@@ -2,29 +2,7 @@ ehttp = ehttp or {}
 ehttp.version = 1
 local github_ver = 0
 
-http.Fetch("https://raw.githubusercontent.com/ECS-8624/ehttp/main/lua/autorun/http_fix.lua", function(contents, size)
-    local Entry = string.match(contents, "ehttp.version%s=%s%d+")
 
-    if Entry then
-        github_ver = tonumber(string.match(Entry, "%d+")) or 0
-    end
-
-    if github_ver == 0 then
-        print("[eHTTP/Version] Version couldn't be fetched. Your version is v " .. version)
-    else
-        if version >= github_ver then
-            print("[eHTTP/Version] is up to date")
-        else
-            print("[eHTTP] a newer version is available! You may want to update Version: " .. version)
-
-            if CLIENT then
-                timer.Simple(18, function()
-                    chat.AddText(Color(255, 0, 0), "[eHTTP] a newer version is available!")
-                end)
-            end
-        end
-    end
-end)
 
 local SERVER_STARTED = false
 
@@ -104,7 +82,30 @@ function http.Post(url, parameters, onSuccess, onFailure, headers)
         old_post(url, parameters, onSuccess, onFailure, headers)
     end
 end
+-----------------Version------------------------
+http.Fetch("https://raw.githubusercontent.com/ECS-8624/ehttp/main/lua/autorun/http_fix.lua", function(contents, size)
+    local Entry = string.match(contents, "ehttp.version%s=%s%d+")
 
+    if Entry then
+        github_ver = tonumber(string.match(Entry, "%d+")) or 0
+    end
+
+    if github_ver == 0 then
+        print("[eHTTP/Version] Version couldn't be fetched. Your version is v " .. ehttp.version)
+    else
+        if ehttp.version >= github_ver then
+            print("[eHTTP/Version] is up to date")
+        else
+            print("[eHTTP] a newer version is available! You may want to update Version: " .. ehttp.version)
+
+            if CLIENT then
+                timer.Simple(18, function()
+                    chat.AddText(Color(255, 0, 0), "[eHTTP] a newer version is available!")
+                end)
+            end
+        end
+    end
+end)
 -----------------------------------------------------------------------------
 --  Autorun through table
 ------------------------------------------------------------------------------
