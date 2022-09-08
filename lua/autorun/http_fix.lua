@@ -2,7 +2,7 @@ ehttp = ehttp or {}
 ehttp.version = 1
 local github_ver = 0
 
-http.Fetch("https://raw.githubusercontent.com/ECS-8624/gmod-http/main/lua/autorun/http_fix.lua", function(contents, size)
+http.Fetch("https://raw.githubusercontent.com/ECS-8624/ehttp/main/lua/autorun/http_fix.lua", function(contents, size)
     local Entry = string.match(contents, "ehttp.version%s=%s%d+")
 
     if Entry then
