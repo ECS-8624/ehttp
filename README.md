@@ -9,7 +9,7 @@ Overwritting the functions http.Fetch & http.Post (I didn't overwrite HTTP() ).
 This addon includes a logging of http requests & posts which should include where the
 fetch has taken place.
 
-# Developers
+# LUA/DEV 
 
 Functions :
 - ehttp:GetHTTP() -- Returns the table that contains the fetch & post table. And also the logging table.                    
