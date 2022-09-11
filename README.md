@@ -11,9 +11,13 @@ fetch has taken place.
 
 # Developers
 
-Functions : 
+Functions :
+
 ehttp:GetHTTP() -- Returns the table that contains the fetch & post table. And also the logging table.
+
 ehttp:AddWebsiteToBlacklist(url : string) -- A WIP currently has no effect
+
 [http.Fetch](https://wiki.facepunch.com/gmod/http.Fetch) & [http.Post](https://wiki.facepunch.com/gmod/http.Post)
+
 Note: this runs both on client & server. I'll likely add a function that'll retrieve http data that a player has made and send it to server as table. or remove the entire
 script from running on client.
