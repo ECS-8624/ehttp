@@ -77,7 +77,7 @@ function http.Post(url, parameters, onSuccess, onFailure, headers)
             }
         })
 
-        PrintTable(global_http_tbl)
+        -- PrintTable(global_http_tbl)
     else
         old_post(url, parameters, onSuccess, onFailure, headers)
     end
@@ -106,6 +106,33 @@ http.Fetch("https://raw.githubusercontent.com/ECS-8624/ehttp/main/lua/autorun/ht
         end
     end
 end)
+-----------------------------
+--  New Feature for gathering http data from client. (WIP)
+-----------------------------
+
+if SERVER then
+    util.AddNetworkString("DataGathering:Ehttp") 
+    function ehttp:GetFromClient(ply) --Expected output is to be an output. 
+        local return_value = {}
+        if ply:IsPlayer() then 
+            net.Start("DataGathering:Ehttp")
+            net.Send(ply)
+            net.Receive("DataGathering:Ehttp", function()
+                return_value = net.ReadTable()
+            end )
+        end 
+        return return_value
+    end 
+end 
+
+if CLIENT then 
+    local net_ = "DataGathering:Ehttp"
+    net.Receive(net_, function(len, ply)
+            net.Start(net_)
+            net.WriteTable(ehttp:GetHTTP())
+            net.SendToServer()
+    end )
+end 
 -----------------------------------------------------------------------------
 --  Autorun through table
 ------------------------------------------------------------------------------
@@ -116,7 +143,9 @@ hook.Add("InitPostEntity", "eHttpRUN", function()
 
         for _, v in pairs(global_http_tbl["FETCH"]) do
             global_http_tbl["FETCH"][_].run()
+            if not global_http_tbl["FETCH"][_].url == "https://raw.githubusercontent.com/ECS-8624/ehttp/main/lua/autorun/http_fix.lua" then 
             print("[eHTTP] Running fetch for " .. global_http_tbl["FETCH"][_].url)
+            end 
         end
 
         print("[eHTTP] Completed syncing for fetch.")
